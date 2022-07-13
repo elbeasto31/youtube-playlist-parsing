@@ -25,7 +25,7 @@
 						<TextBlock Grid.Column="2" Foreground="CadetBlue" FontWeight="UltraBold" HorizontalAlignment="Center" VerticalAlignment="Top" Text= "Duration" />
 						<TextBlock Foreground="CadetBlue" FontWeight="UltraBold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text= "Playlist: " />
 						<TextBlock FontSize="14" Foreground="BlueViolet" FontWeight="DemiBold" VerticalAlignment="Bottom" Text= "{Binding Playlist.Name}" Margin="60,0,0,0"/>
-						<TextBlock FontSize="18" Grid.Column="1" Text="{Binding Artist}" Margin="-37,25,0,0"/>
+						<TextBlock FontSize="18" Grid.Column="1" Text="{Binding Artist}" Margin="-39,25,0,0"/>
 						<TextBlock FontSize="14" Foreground="BlueViolet" FontWeight="DemiBold" Grid.Column="3" VerticalAlignment="Bottom" Text="{Binding Duration}" Margin="110,25,0,0"/>
 						<TextBlock FontSize="18" MaxWidth="585" Text="{Binding Name}" Margin="-164,25,0,0"/>
 					</Grid>
