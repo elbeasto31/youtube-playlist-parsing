@@ -13,8 +13,7 @@
 	<Design.DataContext>
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
-
-
+	
 	<ListBox Items="{Binding Songs}">
 		<ListBox.ItemTemplate>
 
@@ -23,7 +22,6 @@
 				<Border>
 
 					<Grid  ColumnDefinitions="750,1.5*,1*" Margin="5">
-						<Image Stretch="UniformToFill" HorizontalAlignment="Center" Source="{Binding Image}" Height="100" Width="100"/>
 						<TextBlock Grid.Row="10" Foreground="CadetBlue" FontWeight="UltraBold" VerticalAlignment="Top" Text= "Song name"/>
 						<TextBlock Grid.Row="10" Foreground="CadetBlue" FontWeight="UltraBold" HorizontalAlignment="Right" VerticalAlignment="Top" Text= "Artist"/>
 						<TextBlock Grid.Column="2" Foreground="CadetBlue" FontWeight="UltraBold" HorizontalAlignment="Center" VerticalAlignment="Top" Text= "Duration" />
@@ -32,7 +30,6 @@
 						<TextBlock FontSize="18" Grid.Column="1" Text="{Binding Artist}" Margin="-37,25,0,0"/>
 						<TextBlock FontSize="14" Foreground="BlueViolet" FontWeight="DemiBold" Grid.Column="3" VerticalAlignment="Bottom" Text="{Binding Duration}" Margin="110,25,0,0"/>
 						<TextBlock FontSize="18" MaxWidth="585" Text="{Binding Name}" Margin="-164,25,0,0"/>
-
 					</Grid>
 				</Border>
 			</DataTemplate>
