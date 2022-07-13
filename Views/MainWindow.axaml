@@ -8,13 +8,11 @@
         Icon="/Assets/187209.png"
         Title="ParsingPlaylists">
 
-
-	
 	<Design.DataContext>
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
 	
-	<ListBox Items="{Binding Songs}">
+	<ListBox SelectedItem="{Binding SelectedItem}" Items="{Binding Songs}">
 		<ListBox.ItemTemplate>
 
 			<DataTemplate>

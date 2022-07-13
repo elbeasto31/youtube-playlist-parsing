@@ -18,6 +18,8 @@ namespace ParsingPlaylists.Models
 
         public string Duration { get; set; }
 
+        public string URL { get; set; }
+
         [JsonIgnore]
         public Bitmap Image { get; set; }
 

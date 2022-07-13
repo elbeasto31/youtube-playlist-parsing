@@ -7,6 +7,7 @@ using ParsingPlaylists.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -22,6 +23,7 @@ namespace ParsingPlaylists.ViewModels
     {
         public MainWindowViewModel()
         {
+            //playlist initialization
             Initialize("https://www.youtube.com/playlist?list=PLMLISUSjWLb2QLHwHc6Pqn1piM1dRRPTk");
         }
 
@@ -36,6 +38,25 @@ namespace ParsingPlaylists.ViewModels
                     _songs = value;
                     OnPropertyChanged();
                 }
+            }
+        }
+
+        //selected song item
+        Song selectedItem;
+
+        public Song SelectedItem
+        {
+            get => selectedItem;
+            set {
+                selectedItem = value;
+                OnPropertyChanged();
+
+                //redirects to song's youtube page on click
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = value.URL,
+                    UseShellExecute = true
+                });
             }
         }
 
@@ -68,12 +89,14 @@ namespace ParsingPlaylists.ViewModels
 
             foreach (var song in playlistChildren)
             {
-                if (song.Next != null)
+                if (song.SelectToken("$..playlistVideoRenderer") != null)
                 {
                     string title = song.SelectTokens("$..title.runs[0].text").First().ToString();
                     string artist = song.SelectTokens("$..shortBylineText.runs[0].text").First().ToString();
                     string duration = song.SelectTokens("$..lengthText.simpleText").First().ToString();
-                    songs.Add(new Song { Name = title, Artist = artist, Duration = duration, Playlist = playlist });
+                    string url = "https://www.youtube.com/watch?v=" + song.SelectTokens("$..playlistVideoRenderer.videoId").First().ToString();
+
+                    songs.Add(new Song { Name = title, Artist = artist, Duration = duration, Playlist = playlist, URL = url });
                 }
             }
 
