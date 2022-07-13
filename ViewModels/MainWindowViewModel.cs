@@ -39,16 +39,10 @@ namespace ParsingPlaylists.ViewModels
             }
         }
 
-
-
-
         private void Initialize(string url)
         {
             Songs = new ObservableCollection<Song>(getPlaylist(url));
-
         }
-
-
 
         public static List<Song> getPlaylist(string playlistURL)
         {
@@ -58,14 +52,18 @@ namespace ParsingPlaylists.ViewModels
             HtmlWeb htmlWeb = new HtmlWeb();
             HtmlDocument doc = htmlWeb.Load(playlistURL);
 
-            var jsonText = doc.DocumentNode.SelectSingleNode("/html/body/script[15]").InnerText.Substring(21).Replace(';'.ToString(), String.Empty);
-            var data = JObject.Parse("{" + jsonText);
+            //finding initial data on the page
+            var jsonText = doc.DocumentNode.Descendants().First(x => x.InnerText.Contains("InitialData")).InnerText;
+
+            //parsing string to json object and removing variable declaration elements with substring method
+            var data = JObject.Parse("{" + jsonText.Substring(21, jsonText.Length - 22));
 
             string playlistName = data.SelectTokens("$..title.simpleText").First().ToString();
             string playlistDescription = data.SelectTokens("$..playlistHeaderRenderer.descriptionText").First().ToString();
 
             Playlist playlist = new Playlist { Name = playlistName, Description = playlistDescription };
 
+            //finding json tokens that contain data about songs
             IEnumerable<JToken> playlistChildren = data.SelectTokens("$..playlistVideoListRenderer.contents").Children();
 
             foreach (var song in playlistChildren)
