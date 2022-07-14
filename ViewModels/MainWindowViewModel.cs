@@ -24,11 +24,14 @@ namespace ParsingPlaylists.ViewModels
         public MainWindowViewModel()
         {
             //playlist initialization
+            Songs = new ObservableCollection<Song>();
+
             Initialize("https://www.youtube.com/playlist?list=PLMLISUSjWLb2QLHwHc6Pqn1piM1dRRPTk");
+            Initialize("https://music.youtube.com/playlist?list=OLAK5uy_lWmVhD1gINd1Mp_9K7xl_hMg8gOLxLj58");
         }
 
-        private ObservableCollection<Song> _songs;
-        public ObservableCollection<Song> Songs
+        private IEnumerable<Song> _songs;
+        public IEnumerable<Song> Songs
         {
             get => _songs;
             set
@@ -42,12 +45,13 @@ namespace ParsingPlaylists.ViewModels
         }
 
         //selected song item
-        Song selectedItem;
+        private Song selectedItem;
 
         public Song SelectedItem
         {
             get => selectedItem;
-            set {
+            set
+            {
                 selectedItem = value;
                 OnPropertyChanged();
 
@@ -62,13 +66,18 @@ namespace ParsingPlaylists.ViewModels
 
         private void Initialize(string url)
         {
-            Songs = new ObservableCollection<Song>(getPlaylist(url));
+            //converts youtube music link to ordinary youtube link if needed
+            url = url.Replace("music.", String.Empty);
+
+            //adds new songs from url to the main collection
+            Songs = Songs.Concat(new ObservableCollection<Song>(getPlaylist(url)));
+
         }
 
-        public static List<Song> getPlaylist(string playlistURL)
+        public static ICollection<Song> getPlaylist(string playlistURL)
         {
 
-            List<Song> songs = new List<Song>();
+            ICollection<Song> songs = new List<Song>();
 
             HtmlWeb htmlWeb = new HtmlWeb();
             HtmlDocument doc = htmlWeb.Load(playlistURL);
@@ -79,7 +88,7 @@ namespace ParsingPlaylists.ViewModels
             //parsing string to json object and removing variable declaration elements with substring method
             var data = JObject.Parse("{" + jsonText.Substring(21, jsonText.Length - 22));
 
-            string playlistName = data.SelectTokens("$..title.simpleText").First().ToString();
+            string playlistName = data.SelectTokens("$..playlistHeaderRenderer.title.simpleText").First().ToString();
             string playlistDescription = data.SelectTokens("$..playlistHeaderRenderer.descriptionText").First().ToString();
 
             Playlist playlist = new Playlist { Name = playlistName, Description = playlistDescription };
