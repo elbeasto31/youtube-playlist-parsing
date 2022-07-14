@@ -24,8 +24,10 @@ namespace ParsingPlaylists.ViewModels
         public MainWindowViewModel()
         {
             //playlist initialization
+
             Songs = new ObservableCollection<Song>();
 
+            Initialize("https://www.youtube.com/playlist?list=PLWBAinm2sYBhADg8abuCctFfF4jTcgOPn");
             Initialize("https://www.youtube.com/playlist?list=PLMLISUSjWLb2QLHwHc6Pqn1piM1dRRPTk");
             Initialize("https://music.youtube.com/playlist?list=OLAK5uy_lWmVhD1gINd1Mp_9K7xl_hMg8gOLxLj58");
         }
@@ -88,10 +90,10 @@ namespace ParsingPlaylists.ViewModels
             //parsing string to json object and removing variable declaration elements with substring method
             var data = JObject.Parse("{" + jsonText.Substring(21, jsonText.Length - 22));
 
-            string playlistName = data.SelectTokens("$..playlistHeaderRenderer.title.simpleText").First().ToString();
-            string playlistDescription = data.SelectTokens("$..playlistHeaderRenderer.descriptionText").First().ToString();
+            var playlistName = data.SelectTokens("$..playlistHeaderRenderer.title.simpleText").FirstOrDefault();
+            var playlistDescription = data.SelectTokens("$..playlistHeaderRenderer.descriptionText.simpleText").FirstOrDefault() ?? String.Empty;
 
-            Playlist playlist = new Playlist { Name = playlistName, Description = playlistDescription };
+            Playlist playlist = new Playlist { Name = playlistName.ToString(), Description = playlistDescription.ToString().Replace("\n", " ") };
 
             //finding json tokens that contain data about songs
             IEnumerable<JToken> playlistChildren = data.SelectTokens("$..playlistVideoListRenderer.contents").Children();

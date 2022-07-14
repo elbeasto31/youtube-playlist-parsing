@@ -23,8 +23,10 @@
 						<TextBlock Grid.Row="10" Foreground="CadetBlue" FontWeight="UltraBold" VerticalAlignment="Top" Text= "Song name"/>
 						<TextBlock Grid.Row="10" Foreground="CadetBlue" FontWeight="UltraBold" HorizontalAlignment="Right" VerticalAlignment="Top" Text= "Artist"/>
 						<TextBlock Grid.Column="2" Foreground="CadetBlue" FontWeight="UltraBold" HorizontalAlignment="Center" VerticalAlignment="Top" Text= "Duration" />
-						<TextBlock Foreground="CadetBlue" FontWeight="UltraBold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text= "Playlist: " />
-						<TextBlock FontSize="14" Foreground="BlueViolet" FontWeight="DemiBold" VerticalAlignment="Bottom" Text= "{Binding Playlist.Name}" Margin="60,0,0,0"/>
+						<TextBlock Foreground="CadetBlue" FontWeight="UltraBold" HorizontalAlignment="Left" VerticalAlignment="Center" Text= "Playlist: " Margin="0,20,0,0"/>
+						<TextBlock Foreground="CadetBlue" FontWeight="UltraBold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text= "Description: " Margin="0,20,0,0"/>
+						<TextBlock FontSize="14" Foreground="BlueViolet" FontWeight="DemiBold" VerticalAlignment="Bottom" MaxWidth="585" Text= "{Binding Playlist.Description}" Margin="15,20,0,0"/>
+						<TextBlock FontSize="14" Foreground="BlueViolet" FontWeight="DemiBold" VerticalAlignment="Center" Text= "{Binding Playlist.Name}" Margin="60,20,0,0"/>
 						<TextBlock FontSize="18" Grid.Column="1" Text="{Binding Artist}" Margin="-39,25,0,0"/>
 						<TextBlock FontSize="14" Foreground="BlueViolet" FontWeight="DemiBold" Grid.Column="3" VerticalAlignment="Bottom" Text="{Binding Duration}" Margin="110,25,0,0"/>
 						<TextBlock FontSize="18" MaxWidth="585" Text="{Binding Name}" Margin="-164,25,0,0"/>
@@ -34,7 +36,7 @@
 		</ListBox.ItemTemplate>
 		<ListBox.ItemsPanel>
 			<ItemsPanelTemplate>
-				<WrapPanel ItemWidth="1400" ItemHeight="100" Orientation="Horizontal" Margin="5"/>
+				<WrapPanel ItemWidth="1400" ItemHeight="150" Orientation="Horizontal" Margin="5"/>
 			</ItemsPanelTemplate>
 		</ListBox.ItemsPanel>
 	</ListBox>
