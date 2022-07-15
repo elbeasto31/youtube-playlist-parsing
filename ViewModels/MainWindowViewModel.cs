@@ -63,6 +63,7 @@ namespace ParsingPlaylists.ViewModels
                     FileName = value.URL,
                     UseShellExecute = true
                 });
+
             }
         }
 
@@ -87,11 +88,19 @@ namespace ParsingPlaylists.ViewModels
             //finding initial data on the page
             var jsonText = doc.DocumentNode.Descendants().First(x => x.InnerText.Contains("InitialData")).InnerText;
 
+
             //parsing string to json object and removing variable declaration elements with substring method
             var data = JObject.Parse("{" + jsonText.Substring(21, jsonText.Length - 22));
 
             var playlistName = data.SelectTokens("$..playlistHeaderRenderer.title.simpleText").FirstOrDefault();
             var playlistDescription = data.SelectTokens("$..playlistHeaderRenderer.descriptionText.simpleText").FirstOrDefault() ?? String.Empty;
+
+            //validating the link
+            if (playlistName is null)
+            {
+                songs.Add(new Song { Name = "Incorrect URL", URL = playlistURL });
+                return songs;
+            }
 
             Playlist playlist = new Playlist { Name = playlistName.ToString(), Description = playlistDescription.ToString().Replace("\n", " ") };
 
