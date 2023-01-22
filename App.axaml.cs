@@ -1,7 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using ParsingPlaylists.ViewModels;
+using ParsingPlaylist.ViewModels;
 using ParsingPlaylists.Views;
 
 namespace ParsingPlaylists

@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using ParsingPlaylists.ViewModels;
 using System;
+using ParsingPlaylist.ViewModels;
 
 namespace ParsingPlaylists
 {

@@ -1,35 +1,96 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:ParsingPlaylists.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:ParsingPlaylist.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="ParsingPlaylists.Views.MainWindow"
         Icon="/Assets/187209.png"
         Title="ParsingPlaylists">
-
 	<Design.DataContext>
-		<vm:MainWindowViewModel/>
+		<viewModels:MainWindowViewModel/>
 	</Design.DataContext>
-	
-	<ListBox SelectedItem="{Binding SelectedItem}" Items="{Binding Songs}">
+	<ListBox 
+		SelectedItem="{Binding SelectedItem}"
+		Items="{Binding Songs}">
+		<ListBox.Styles>
+			<Style Selector="TextBlock.Header">
+				<Setter Property="Foreground" Value="CadetBlue"/>
+				<Setter Property="FontWeight" Value="UltraBold"/>
+				<Setter Property="FontWeight" Value="UltraBold"/>
+			</Style>
+			<Style Selector="TextBlock.Track">
+				<Setter Property="FontSize" Value="18"/>
+				<Setter Property="Margin" Value="0, 10, 0, 0"/>
+				<Setter Property="MaxWidth" Value="400"/>
+				<Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+			</Style>			
+			<Style Selector="TextBlock.Detail">
+				<Setter Property="FontSize" Value="14"/>
+				<Setter Property="Foreground" Value="BlueViolet"/>
+				<Setter Property="FontWeight" Value="DemiBold"/>
+			</Style>
+		</ListBox.Styles>
 		<ListBox.ItemTemplate>
-
 			<DataTemplate>
-
 				<Border>
-
-					<Grid  ColumnDefinitions="750,1.5*,1*" Margin="5">
-						<TextBlock Grid.Row="10" Foreground="CadetBlue" FontWeight="UltraBold" VerticalAlignment="Top" Text= "Song name"/>
-						<TextBlock Grid.Row="10" Foreground="CadetBlue" FontWeight="UltraBold" HorizontalAlignment="Right" VerticalAlignment="Top" Text= "Artist"/>
-						<TextBlock Grid.Column="2" Foreground="CadetBlue" FontWeight="UltraBold" HorizontalAlignment="Center" VerticalAlignment="Top" Text= "Duration" />
-						<TextBlock Foreground="CadetBlue" FontWeight="UltraBold" HorizontalAlignment="Left" VerticalAlignment="Center" Text= "Playlist: " Margin="0,20,0,0"/>
-						<TextBlock Foreground="CadetBlue" FontWeight="UltraBold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text= "Description: " Margin="0,20,0,0"/>
-						<TextBlock FontSize="14" Foreground="BlueViolet" FontWeight="DemiBold" VerticalAlignment="Bottom" MaxWidth="585" Text= "{Binding Playlist.Description}" Margin="15,20,0,0"/>
-						<TextBlock FontSize="14" Foreground="BlueViolet" FontWeight="DemiBold" VerticalAlignment="Center" Text= "{Binding Playlist.Name}" Margin="60,20,0,0"/>
-						<TextBlock FontSize="18" Grid.Column="1" Text="{Binding Artist}" Margin="-39,25,0,0"/>
-						<TextBlock FontSize="14" Foreground="BlueViolet" FontWeight="DemiBold" Grid.Column="3" VerticalAlignment="Center" Text="{Binding Duration}" Margin="110,20,0,0"/>
-						<TextBlock FontSize="18" MaxWidth="585" Text="{Binding Name}" Margin="-164,25,0,0"/>
+					<Grid  
+						ColumnDefinitions="Auto, *,Auto"
+						RowDefinitions="Auto, *, Auto, *"
+						Margin="5">
+						<TextBlock 
+							Classes="Header"
+							VerticalAlignment="Top"
+							Text="Song name"/>
+						<TextBlock
+							Grid.Column="1"
+							Classes="Header"
+							HorizontalAlignment="Center"
+							Text="Artist"/>
+						<TextBlock
+							Grid.Column="2"
+							Classes="Header"
+							Text="Duration" />
+						<TextBlock
+							Grid.Row="1"
+							Classes="Track"
+							Text="{Binding Name}"/>
+						<TextBlock
+							Grid.Row="1"
+							Grid.Column="1"
+							Classes="Track"
+							HorizontalAlignment="Center"
+							Text="{Binding Artist}"/>
+						<TextBlock
+							Grid.Row="1"
+							Grid.Column="2"
+							Classes="Detail"
+							Margin="10, 10, 0, 0"
+							Text="{Binding Duration}"/>
+						<TextBlock
+							Grid.Row="2"
+							Classes="Header"
+							Text="Playlist: "
+							Margin="0,20,0,0"/>
+						<TextBlock
+							Grid.Row="2"
+							Classes="Detail"
+							Text="{Binding Playlist.Name}"
+							Margin="60,20,0,0"/>
+						<TextBlock
+							Grid.Row="3"
+							Classes="Header"
+							Text="Description: "
+							MaxWidth="585"
+							TextTrimming="CharacterEllipsis"
+							Margin="0,20,0,0"/>
+						<TextBlock
+							Grid.Row="3"
+							Classes="Detail"
+							MaxWidth="585"
+							TextTrimming="CharacterEllipsis"
+							Text="{Binding Playlist.Description}"
+							Margin="15,20,0,0"/>
 					</Grid>
 				</Border>
 			</DataTemplate>
@@ -40,7 +101,4 @@
 			</ItemsPanelTemplate>
 		</ListBox.ItemsPanel>
 	</ListBox>
-
-
-
 </Window>
